@@ -2,6 +2,7 @@ from django.urls import path ,include
 from rest_framework.routers import DefaultRouter
 from . import views
 
+# we dont use as_view() with viewset class
 #details Router
 detailsRouter=DefaultRouter(trailing_slash=False)
 detailsRouter.register(r'basic',views.BasicDetailsView,basename="basicdetails")
@@ -19,7 +20,7 @@ performanceRouter=DefaultRouter(trailing_slash=False)
 performanceRouter.register(r'resume',views.ResumeView,basename="resume")
 
 urlpatterns=[
-      path(r'details/', include(detailsRouter.urls)),
-      path(r'academic/', include(academicRouter.urls)),
-      path(r'performance/', include(performanceRouter.urls))
+      path(r'/details/', include(detailsRouter.urls)),
+      path(r'/academic/', include(academicRouter.urls)),
+      path(r'/performance/', include(performanceRouter.urls))
 ]

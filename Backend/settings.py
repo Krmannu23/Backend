@@ -37,9 +37,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'Application',
+    'rest_framework',
+    'corsheaders',
+    "rest_framework_simplejwt",
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -97,6 +102,21 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
+]
+CORS_ALLOWED_ORIGINS = [ 
+"https://api.domain.com",
+"http://localhost:4200",
+"http://localhost:4300",
+"http://127.0.0.1:8200",
+]
+
+CORS_ALLOW_METHODS = [ #adding 4 #The CORS_ALLOW_METHODS setting limits what methods are allowed for CORS. These are the default values:
+'DELETE',
+'GET',
+'OPTIONS',
+'PATCH',
+'POST',
+'PUT',
 ]
 
 

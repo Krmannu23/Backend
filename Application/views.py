@@ -37,9 +37,12 @@ class CollegeDetailsView(viewsets.ModelViewSet):
     permission_class=permissions.AllowAny
     serializer_class=serializers.CollegeDetailsSerializer
 
-class SchoolingDetailsView(viewsets.ModelViewSet):
+class TenSchoolingDetailsView(viewsets.ModelViewSet):
     permission_class=permissions.AllowAny
-    serializer_class=serializers.SchoolingDetailsSerializer
+    serializer_class=serializers.TenSchoolingDetailsSerializer
+class TwelfthSchoolingDetailsView(viewsets.ModelViewSet):
+    permission_class=permissions.AllowAny
+    serializer_class=serializers.TwelfthSchoolingDetailsSerializer
 
 class BasicDetailsView(viewsets.ModelViewSet):
     permission_class=permissions.AllowAny
@@ -48,3 +51,7 @@ class BasicDetailsView(viewsets.ModelViewSet):
 class ResumeView(viewsets.ModelViewSet):
     permission_class=permissions.AllowAny
     serializer_class=serializers.ResumeSerializer
+
+class FullApiView(CreateAPIView):
+    permission_class=permissions.AllowAny
+    serializer_class=serializers.FullApiSerializer

@@ -24,5 +24,5 @@ urlpatterns=[
       path(r'/details/', include(detailsRouter.urls)),
       path(r'/academic/', include(academicRouter.urls)),
       path(r'/performance/', include(performanceRouter.urls)),
-      path('/full',views.FullApiView.as_view())
+      path(r'/full',views.FullApiView.as_view())
 ]

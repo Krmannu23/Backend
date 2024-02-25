@@ -4,6 +4,7 @@ from rest_framework import viewsets, permissions
 from django.contrib.auth import get_user_model 
 from rest_framework.generics import CreateAPIView
 from django.contrib.auth.models import User
+from .import models
 # Create your views here.
 class UserListViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
@@ -20,6 +21,7 @@ class CreateUserView(CreateAPIView):
     serializer_class = serializers.RegisteredUserSerializer
 
 class TenthView(viewsets.ModelViewSet):
+    queryset = models.Tenth.objects.all()
     permission_class=permissions.AllowAny
     serializer_class=serializers.TenthSerializer
 

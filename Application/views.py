@@ -50,9 +50,9 @@ class BasicDetailsView(viewsets.ModelViewSet):
     permission_class=permissions.AllowAny
     serializer_class=serializers.BasicDetailsSerializer
 
-class ResumeView(viewsets.ModelViewSet):
+class SummaryView(viewsets.ModelViewSet):
     permission_class=permissions.AllowAny
-    serializer_class=serializers.ResumeSerializer
+    serializer_class=serializers.SummarySerializer
 
 class FullApiView(CreateAPIView):
     permission_class=permissions.AllowAny

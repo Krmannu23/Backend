@@ -6,8 +6,8 @@ from . import views
 #details Router
 detailsRouter=DefaultRouter(trailing_slash=False)
 detailsRouter.register(r'basic',views.BasicDetailsView,basename="basicdetails")
-detailsRouter.register(r'tenschooling',views.TenSchoolingDetailsView,basename="Tenschoolingdetails")
-detailsRouter.register(r'twlvethschooling',views.TwelfthSchoolingDetailsView,basename="Twelfthschoolingdetails")
+detailsRouter.register(r'tenschooling',views.TenSchoolingDetailsView,basename="tenschoolingdetails")
+detailsRouter.register(r'twlvethschooling',views.TwelfthSchoolingDetailsView,basename="twelfthschoolingdetails")
 detailsRouter.register(r'college',views.CollegeDetailsView,basename="collegedetails")
 
 #academic Router
@@ -18,11 +18,11 @@ academicRouter.register(r'college',views.CollegeView,basename="college")
 
 #performance Router
 performanceRouter=DefaultRouter(trailing_slash=False)
-performanceRouter.register(r'resume',views.ResumeView,basename="resume")
+performanceRouter.register(r'summary',views.SummaryView,basename="summary")
 
 urlpatterns=[
       path(r'/details/', include(detailsRouter.urls)),
       path(r'/academic/', include(academicRouter.urls)),
       path(r'/performance/', include(performanceRouter.urls)),
-      path(r'/full',views.FullApiView.as_view())
+      path(r'/all',views.FullApiView.as_view())
 ]

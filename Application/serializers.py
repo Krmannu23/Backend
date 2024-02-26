@@ -7,46 +7,46 @@ class SubjectSerializer(serializers.ModelSerializer):
 
     class Meta:
         model=models.Subject
-        fields='__all__'
+        exclude=['subjectId']
 
 
 class AdditionalDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.OtherDetails
-        fields = '__all__'
+        exclude=['idNumber']
 class NameSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Name
-        fields = '__all__'
+        fields="__all__"
 
 class TenthSerializer(serializers.ModelSerializer):
     subject=SubjectSerializer(many=True)
     class Meta:
         model=models.Tenth
-        fields='__all__'
+        exclude=['tenId']
 
 class TwelfthSerializer(serializers.ModelSerializer):
     subject=SubjectSerializer(many=True)
     class Meta:
         model=models.Twelfth
-        fields='__all__'
+        exclude=['twelfthId']
 
 class CollegeSerializer(serializers.ModelSerializer):
     subject=SubjectSerializer(many=True)
     class Meta:
         model=models.College
-        fields='__all__'
+        exclude=['collegeId']
 
 class CollegeDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model=models.CollegeDetails
         fields='__all__'
 
-class ResumeSerializer(serializers.ModelSerializer):
+class SummarySerializer(serializers.ModelSerializer):
     class Meta:
-        model=models.Resume
-        fields='__all__'
+        model=models.Summary
+        exclude=['summaryId']
 class UserListSerializer(serializers.ModelSerializer):
  
     class Meta:
@@ -63,8 +63,8 @@ class RegisteredUserSerializer(serializers.ModelSerializer):
         user = UserModel.objects.create_user(
             username=validated_data['username'],
             password=validated_data['password'],
-            first_name=validated_data['first_name'],
-            last_name=validated_data['last_name'],
+            firstName=validated_data['first_name'],
+            lastName=validated_data['last_name'],
             email=validated_data['email'],
             #gender=validated_data['gender'], if go Inside User model only username ,password,email,first_name ,last_name h isliye or koi aur field nhi lega
         )
@@ -74,49 +74,50 @@ class RegisteredUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserModel
 
-        fields = ( "id", "username", "password", "email","first_name","last_name") #( "id", "username", "password", "email","gender")
+        fields = ( "id", "username", "password", "email","firstName","lastName") #( "id", "username", "password", "email","gender")
 
 class ParentDetailsSerializer(serializers.ModelSerializer):
-    name=NameSerializer()
-    other_details=AdditionalDetailsSerializer()
+    parent=NameSerializer()
+    otherDetails=AdditionalDetailsSerializer()
     class Meta:
         model = models.ParentDetails
-        fields = '__all__'
+        exclude=['parentId']
 
 
 
 class AddressSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Address
-        fields = '__all__'
+        exclude=['addressId']
 
 class TenSchoolingDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.TenSchoolingDetails
-        fields = '__all__'
+        exclude=['tenthRollNo']
 
 class TwelfthSchoolingDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.TwelfthSchoolingDetails
-        fields = '__all__'
+        exclude=['twelfthRollNo']
 
 class BasicDetailsSerializer(serializers.ModelSerializer):
     name=NameSerializer()
-    other_details=AdditionalDetailsSerializer()
+    otherDetails=AdditionalDetailsSerializer()
     parentInfo=ParentDetailsSerializer()
    
     class Meta:
         model=models.BasicDetails
-        fields='__all__'
+        fields="__all__"
 class FullApiSerializer(serializers.ModelSerializer):
-    basic_details = BasicDetailsSerializer()
-    tenth_schooling_details = TenSchoolingDetailsSerializer()
-    twelfth_schooling_details = TwelfthSchoolingDetailsSerializer()
-    college_details = CollegeDetailsSerializer()
+    basicDetails = BasicDetailsSerializer()
+    tenthSchoolingDetails = TenSchoolingDetailsSerializer()
+    twelfthSchoolingDetails = TwelfthSchoolingDetailsSerializer()
+    collegeDetails = CollegeDetailsSerializer()
     tenth = TenthSerializer()
     twelfth = TwelfthSerializer()
     college = CollegeSerializer()
+    studentSummary=SummarySerializer()
 
     class Meta:
         model = models.FullApi
-        fields = '__all__'
+        fields='__all__'

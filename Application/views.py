@@ -10,6 +10,9 @@ class UserListViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = serializers.UserListSerializer
 
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
 #creating user with password
 
 class CreateUserView(CreateAPIView):
@@ -22,33 +25,54 @@ class CreateUserView(CreateAPIView):
 
 class TenthView(viewsets.ModelViewSet):
     queryset = models.Tenth.objects.all()
-    permission_class=permissions.AllowAny
+    permission_class=permissions.IsAuthenticated
     serializer_class=serializers.TenthSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
 
 
 class TwelfthView(viewsets.ModelViewSet):
-    permission_class=permissions.AllowAny
+    queryset=models.Twelfth.objects.all()
+    permission_class=permissions.IsAuthenticated
     serializer_class=serializers.TwelfthSerializer
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
 
 
 class CollegeView(viewsets.ModelViewSet):
-    permission_class=permissions.AllowAny
+    queryset=models.College.objects.all()
+    permission_class=permissions.IsAuthenticated
     serializer_class=serializers.CollegeSerializer
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
 
 class CollegeDetailsView(viewsets.ModelViewSet):
-    permission_class=permissions.AllowAny
+    queryset=models.CollegeDetails.objects.all()
+    permission_class=permissions.IsAuthenticated
     serializer_class=serializers.CollegeDetailsSerializer
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
 
 class TenSchoolingDetailsView(viewsets.ModelViewSet):
-    permission_class=permissions.AllowAny
+    permission_class=permissions.IsAuthenticated
     serializer_class=serializers.TenSchoolingDetailsSerializer
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
 class TwelfthSchoolingDetailsView(viewsets.ModelViewSet):
-    permission_class=permissions.AllowAny
+    permission_class=permissions.IsAuthenticated
     serializer_class=serializers.TwelfthSchoolingDetailsSerializer
 
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
 class BasicDetailsView(viewsets.ModelViewSet):
-    permission_class=permissions.AllowAny
+    queryset=models.BasicDetails.objects.all()
+    permission_class=permissions.IsAuthenticated
     serializer_class=serializers.BasicDetailsSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
 
 class SummaryView(viewsets.ModelViewSet):
     permission_class=permissions.AllowAny

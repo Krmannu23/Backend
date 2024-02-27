@@ -29,9 +29,9 @@ authRouter=DefaultRouter(trailing_slash=False)
 
 authRouter.register(r'userList' ,views.UserListViewSet ,basename="lists")
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls),#mannu 123mannu
     path(r'authUserList/',include(authRouter.urls)),
-    path('createUser',views.CreateUserView.as_view() ,name='create_user'),
+    path('createUser',views.CreateUserView.as_view() ,name='create_user'), 
     path('api/login', TokenObtainPairView.as_view(), name='token_obtain_pair'), #refresh + access
     path('api/token/refresh', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/token/verify', TokenVerifyView.as_view(), name='token_verify'),

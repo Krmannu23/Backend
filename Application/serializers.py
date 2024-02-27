@@ -59,12 +59,20 @@ class RegisteredUserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
 
     def create(self, validated_data):
-
+#Exception Value:	 Field name `firstName` is not valid for model `User`.
+        # user = UserModel.objects.create_user(
+        #     username=validated_data['username'],
+        #     password=validated_data['password'],
+        #     firstName=validated_data['first_name'],
+        #     lastName=validated_data['last_name'],
+        #     email=validated_data['email'],
+        #     #gender=validated_data['gender'], if go Inside User model only username ,password,email,first_name ,last_name h isliye or koi aur field nhi lega
+        # )
         user = UserModel.objects.create_user(
             username=validated_data['username'],
             password=validated_data['password'],
-            firstName=validated_data['first_name'],
-            lastName=validated_data['last_name'],
+            first_name=validated_data['first_name'],
+            last_name=validated_data['last_name'],
             email=validated_data['email'],
             #gender=validated_data['gender'], if go Inside User model only username ,password,email,first_name ,last_name h isliye or koi aur field nhi lega
         )
@@ -74,7 +82,7 @@ class RegisteredUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserModel
 
-        fields = ( "id", "username", "password", "email","firstName","lastName") #( "id", "username", "password", "email","gender")
+        fields = ( "id", "username", "password", "email","first_name","last_name") #( "id", "username", "password", "email","gender")
 
 class ParentDetailsSerializer(serializers.ModelSerializer):
     parent=NameSerializer()

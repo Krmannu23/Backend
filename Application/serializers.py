@@ -3,42 +3,55 @@ from . import models
 from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model # If used custom user model
 
-class SubjectSerializer(serializers.ModelSerializer):
+class MatriculationSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model=models.Matriculation
+        fields='__all__'
+
+class IntermediateSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model=models.Subject
-        exclude=['subjectId']
+        model=models.Intermediate
+        fields='__all__'
 
+
+class SemsterSubjectSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model=models.SemesterSubject
+        fields='__all__'
+class SemsterSerializer(serializers.ModelSerializer):
+   subject=SemsterSubjectSerializer(many=True)
+   class Meta:
+        model=models.Semester
+        fields='__all__'
 
 class AdditionalDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.OtherDetails
-        exclude=['idNumber']
-class NameSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = models.Name
-        fields="__all__"
+        fields='__all__'
 
 class TenthSerializer(serializers.ModelSerializer):
-    subject=SubjectSerializer(many=True)
+    subject=MatriculationSerializer(many=True)
     class Meta:
         model=models.Tenth
-        exclude=['tenId']
+        fields='__all__'
 
 class TwelfthSerializer(serializers.ModelSerializer):
-    subject=SubjectSerializer(many=True)
+    subject=IntermediateSerializer(many=True)
     class Meta:
         model=models.Twelfth
-        exclude=['twelfthId']
+        fields='__all__'
 
 class CollegeSerializer(serializers.ModelSerializer):
-    subject=SubjectSerializer(many=True)
+    semester=SemsterSerializer(many=True)
     class Meta:
         model=models.College
-        exclude=['collegeId']
+        fields='__all__'
 
 class CollegeDetailsSerializer(serializers.ModelSerializer):
+    college=CollegeSerializer(many=False)
     class Meta:
         model=models.CollegeDetails
         fields='__all__'
@@ -46,7 +59,7 @@ class CollegeDetailsSerializer(serializers.ModelSerializer):
 class SummarySerializer(serializers.ModelSerializer):
     class Meta:
         model=models.Summary
-        exclude=['summaryId']
+        fields='__all__'
 class UserListSerializer(serializers.ModelSerializer):
  
     class Meta:
@@ -85,47 +98,42 @@ class RegisteredUserSerializer(serializers.ModelSerializer):
         fields = ( "id", "username", "password", "email","first_name","last_name") #( "id", "username", "password", "email","gender")
 
 class ParentDetailsSerializer(serializers.ModelSerializer):
-    parent=NameSerializer()
-    otherDetails=AdditionalDetailsSerializer()
     class Meta:
         model = models.ParentDetails
-        exclude=['parentId']
+        fields='__all__'
 
 
 
 class AddressSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Address
-        exclude=['addressId']
+        fields='__all__'
 
 class TenSchoolingDetailsSerializer(serializers.ModelSerializer):
+    tenth=TenthSerializer(many=False)
     class Meta:
         model = models.TenSchoolingDetails
-        exclude=['tenthRollNo']
+        fields='__all__'
 
 class TwelfthSchoolingDetailsSerializer(serializers.ModelSerializer):
+    twelfth=TwelfthSerializer(many=False)
     class Meta:
         model = models.TwelfthSchoolingDetails
-        exclude=['twelfthRollNo']
-
+        fields='__all__'
 class BasicDetailsSerializer(serializers.ModelSerializer):
-    name=NameSerializer()
-    otherDetails=AdditionalDetailsSerializer()
-    parentInfo=ParentDetailsSerializer()
-   
+    parent=ParentDetailsSerializer(many=False)
+    address=AddressSerializer(many=False)
+    otherDetails=AdditionalDetailsSerializer(many=False)
     class Meta:
         model=models.BasicDetails
         fields="__all__"
-class FullApiSerializer(serializers.ModelSerializer):
-    basicDetails = BasicDetailsSerializer()
-    tenthSchoolingDetails = TenSchoolingDetailsSerializer()
-    twelfthSchoolingDetails = TwelfthSchoolingDetailsSerializer()
-    collegeDetails = CollegeDetailsSerializer()
-    tenth = TenthSerializer()
-    twelfth = TwelfthSerializer()
-    college = CollegeSerializer()
-    studentSummary=SummarySerializer()
 
+class ResponsePayload(serializers.ModelSerializer):
+    basicDetails=BasicDetailsSerializer()
+    tenthDetails=TenSchoolingDetailsSerializer()
+    twelfthDetails=TwelfthSchoolingDetailsSerializer()
+    collegeDetails=CollegeDetailsSerializer()
+    summary=SummarySerializer()
     class Meta:
-        model = models.FullApi
-        fields='__all__'
+        model=models.ResponseObjectStudent
+        fields="__all__"

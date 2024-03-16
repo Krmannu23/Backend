@@ -29,7 +29,7 @@ class SemsterSerializer(serializers.ModelSerializer):
 
 class AdditionalDetailsSerializer(serializers.ModelSerializer):
     class Meta:
-        model = models.OtherDetails
+        model = models.AdditionalDetails
         fields='__all__'
 
 class TenthSerializer(serializers.ModelSerializer):
@@ -121,15 +121,22 @@ class TwelfthSchoolingDetailsSerializer(serializers.ModelSerializer):
         model = models.TwelfthSchoolingDetails
         fields='__all__'
 class BasicDetailsSerializer(serializers.ModelSerializer):
-    parent=ParentDetailsSerializer(many=False)
-    address=AddressSerializer(many=False)
-    otherDetails=AdditionalDetailsSerializer(many=False)
+   
     class Meta:
         model=models.BasicDetails
         fields="__all__"
 
-class ResponsePayload(serializers.ModelSerializer):
+class StudentDetailsSerializer(serializers.ModelSerializer):
     basicDetails=BasicDetailsSerializer()
+    parent=ParentDetailsSerializer(many=False)
+    address=AddressSerializer(many=False)
+    additionalDetails=AdditionalDetailsSerializer(many=False)
+    
+    class Meta:
+        model=models.StudentDetails
+        fields="__all__"
+class ResponsePayload(serializers.ModelSerializer):
+    studentDetails=StudentDetailsSerializer()
     tenthDetails=TenSchoolingDetailsSerializer()
     twelfthDetails=TwelfthSchoolingDetailsSerializer()
     collegeDetails=CollegeDetailsSerializer()

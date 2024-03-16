@@ -218,15 +218,15 @@ class AddressDetailsView(viewsets.ModelViewSet):
     
 
 class AdditionalDetailsView(viewsets.ModelViewSet):
-    queryset=models.OtherDetails.objects.all()
+    queryset=models.AdditionalDetails.objects.all()
     # permission_class=permissions.IsAuthenticated
     serializer_class=serializers.AdditionalDetailsSerializer
     lookup_field = 'reference_number'
 
     def create(self, request, *args, **kwargs):
         key = request.data.get('reference_number')
-        if key and len(list(models.OtherDetails.objects.all())):
-            instance = models.OtherDetails.objects.get(reference_number=key)
+        if key and len(list(models.AdditionalDetails.objects.all())):
+            instance = models.AdditionalDetails.objects.get(reference_number=key)
             serializer = self.get_serializer(instance, data=request.data)
         else:
             serializer = self.get_serializer(data=request.data)

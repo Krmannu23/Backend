@@ -35,12 +35,16 @@ class BasicDetails(models.Model):
     gender=models.CharField(max_length=30)
     timestamp=models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        db_table='Basic' #This will remove Applicarion name Application.BasicDetails change to only Basic
+
 class ParentDetails(models.Model):
     titlesOptions =[
     ("M01", "Mrs"),
     ("M02", "Miss"),
     ("M03", "Mr"),
     ("D01", "Dr")
+
     ]
     id=models.UUIDField(primary_key=True,default=uuid.uuid4)#optinal in request body,auto generated
     reference_number=models.ForeignKey(BasicDetails,on_delete=models.CASCADE)
@@ -51,8 +55,11 @@ class ParentDetails(models.Model):
     relationship=models.CharField(max_length=30)#jaha foreign key use hua wuska sinle father hoga ,child ka details bharne ke liye father table ka details ho chahiye
     timestamp=models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        db_table='Parent'
 
 class Address(models.Model):
+   
     id=models.UUIDField(primary_key=True,default=uuid.uuid4)#optinal in request body,auto generated
     reference_number=models.ForeignKey(BasicDetails,on_delete=models.CASCADE)#request body me pass karna yah id
     adressLine1=models.CharField(max_length=30)
@@ -63,13 +70,27 @@ class Address(models.Model):
     country=models.CharField(max_length=30)
     timestamp=models.DateTimeField(auto_now_add=True)
 
-class OtherDetails(models.Model):
+    class Meta:
+        db_table='Address'
+
+class AdditionalDetails(models.Model):
+    telephoneCodes=[
+        ("+91","IND"),
+        ("+1","US"),
+        ("+27","SA"),
+        ("+44","UK"),
+        ("+61","AUS")
+    ]
     id=models.UUIDField(primary_key=True,default=uuid.uuid4)#optinal in request body,auto generated
     reference_number=models.ForeignKey(BasicDetails,on_delete=models.CASCADE)#request body me pass karna yah id
+    telephoneCode=models.CharField(choices=telephoneCodes)
     contactNumber=models.PositiveIntegerField()
     emailId=models.EmailField()
     address = models.ForeignKey(Address, on_delete=models.CASCADE)
     timestamp=models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table='Additional'
     
 
 class Tenth(models.Model):
@@ -77,11 +98,16 @@ class Tenth(models.Model):
     reference_number=models.ForeignKey(BasicDetails,on_delete=models.CASCADE)#request body me pass karna yah id
     timestamp=models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        db_table='Tenth'
 
 class Twelfth(models.Model):
     id=models.UUIDField(primary_key=True,default=uuid.uuid4)#optinal in request body,auto generated
     reference_number=models.ForeignKey(BasicDetails,on_delete=models.CASCADE)#request body me pass karna yah id
     timestamp=models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table='Twelfth'
 
 class College(models.Model):
     sem = [
@@ -98,6 +124,9 @@ class College(models.Model):
     reference_number=models.ForeignKey(BasicDetails,on_delete=models.CASCADE)#request body me pass karna yah id
     seamster=models.CharField(max_length=30,choices=sem)
     timestamp=models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table='College'
 class TenSchoolingDetails(models.Model):
     reference_number=models.ForeignKey(BasicDetails,on_delete=models.CASCADE) #request body me pass karna yah id
     tenthRollNo=models.PositiveIntegerField(blank=False ,primary_key=True,error_messages={'message':'Matriculation roll number cannot be empty'})
@@ -109,6 +138,8 @@ class TenSchoolingDetails(models.Model):
     yearOfPassing=models.CharField(max_length=30)
     timestamp=models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        db_table='TenSchoolingDetails'
 
 class TwelfthSchoolingDetails(models.Model):
     reference_number=models.ForeignKey(BasicDetails,on_delete=models.CASCADE)#request body me pass karna yah id ,auto generated
@@ -120,6 +151,9 @@ class TwelfthSchoolingDetails(models.Model):
     insertDate=models.DateTimeField()
     yearOfPassing=models.CharField(max_length=30)
     timestamp=models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table='TwelfthSchoolingDetails'
 class CollegeDetails(models.Model):
     collegeRollNo=models.PositiveIntegerField(blank=False ,primary_key=True,error_messages={'message':'College roll number cannot be empty'})
     reference_number=models.ForeignKey(BasicDetails,on_delete=models.CASCADE)#request body me pass karna yah id
@@ -129,6 +163,9 @@ class CollegeDetails(models.Model):
     insertDate=models.DateTimeField()
     yearOfPassing=models.CharField(max_length=30)
     timestamp=models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table="CollegeDetails"
 
 
 class Matriculation(models.Model):
@@ -144,6 +181,9 @@ class Matriculation(models.Model):
     marks = models.DecimalField(max_digits=5, decimal_places=2)
     subjectCode = models.CharField(max_length=100)
 
+    class Meta:
+        db_table="Matriculation"
+
 class Intermediate(models.Model):
     subjectId=models.CharField(
            max_length = 10,
@@ -151,16 +191,22 @@ class Intermediate(models.Model):
            editable=False,
            unique=True,
            default=create_new_ref_number,
-           primary_key=True)
+           primary_key=True) 
     reference_number = models.ForeignKey(Twelfth, on_delete=models.CASCADE, related_name='Intermediate')
     subjectName = models.CharField(max_length=100)
     marks = models.DecimalField(max_digits=5, decimal_places=2)
     subjectCode = models.CharField(max_length=100)
 
+    class Meta:
+        db_table="Intermediate"
+
 class Semester(models.Model):
     id=models.UUIDField(primary_key=True,default=uuid.uuid4)
     semester=models.CharField(max_length=100)
     reference_number = models.ForeignKey(College,on_delete=models.CASCADE, related_name='semster')#father dependent i.e College
+
+    class Meta:
+        db_table="Semester"
 class SemesterSubject(models.Model):
     id=models.UUIDField(primary_key=True,default=uuid.uuid4)
     subjectName = models.CharField(max_length=100)
@@ -168,13 +214,26 @@ class SemesterSubject(models.Model):
     subjectCode = models.CharField(max_length=100)
     reference_number = models.ForeignKey(Semester,on_delete=models.CASCADE, related_name='semesterSubject')#father dependent i.e Semster
 
+    class Meta:
+        db_table="SemsterSubject"
+
 class Summary(models.Model):
     id=models.UUIDField(primary_key=True,default=uuid.uuid4)#optinal in request body ,auto generated
     reference_number=models.ForeignKey(BasicDetails,on_delete=models.CASCADE)#request body me pass karna yah id
     matricPercentage=models.FloatField()
     interPercentage=models.FloatField()
     graduationPercentage=models.FloatField()
+
+    class Meta:
+        db_table="Summary"
     
 class ResponseObjectStudent(models.Model):
     id=models.UUIDField(primary_key=True,default=uuid.uuid4)
 
+    class Meta:
+        db_table="ResponseObject"
+
+class StudentDetails(models.Model):
+    id=models.UUIDField(primary_key=True,default=uuid.uuid4)
+    class Meta:
+        db_table="StudentDetails"

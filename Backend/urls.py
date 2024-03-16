@@ -18,6 +18,7 @@ from django.urls import path ,include
 from rest_framework.schemas import get_schema_view 
 from django.views.generic import TemplateView 
 from Application import views
+from django.conf import settings
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
@@ -45,3 +46,7 @@ urlpatterns = [
         extra_context={'schema_url':'openapi-schema'}
     ), name='swagger-ui'),
 ]
+
+if settings.DEBUG: #for development environment enable debugging
+    import debug_toolbar
+    urlpatterns+= path("__debug__/", include("debug_toolbar.urls")),

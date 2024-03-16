@@ -1,0 +1,17 @@
+{
+    "configurations": [
+      {
+        "name": "Python: Django",
+        "type": "python",
+        "request": "launch",
+        "program": "${workspaceFolder}\\manage.py",
+        "args": [
+          "runserver",
+          "127.0.0.1:8500",//F5 click karne par ab yaha khulega ,by default:"127.0.0.0:8000" me khulta tha
+          "--noreload"
+        ],
+        "django": true,
+        "justMyCode": true
+      }
+    ]
+  }

@@ -83,7 +83,7 @@ class AdditionalDetails(models.Model):
     ]
     id=models.UUIDField(primary_key=True,default=uuid.uuid4)#optinal in request body,auto generated
     reference_number=models.ForeignKey(BasicDetails,on_delete=models.CASCADE)#request body me pass karna yah id
-    telephoneCode=models.CharField(choices=telephoneCodes)
+    telephoneCode=models.CharField(choices=telephoneCodes ,max_length=12)
     contactNumber=models.PositiveIntegerField()
     emailId=models.EmailField()
     address = models.ForeignKey(Address, on_delete=models.CASCADE)

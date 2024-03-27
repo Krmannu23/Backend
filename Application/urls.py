@@ -9,9 +9,18 @@ detailsRouter.register(r'basic',views.BasicDetailsView,basename="basicdetail")#w
 detailsRouter.register(r'parent',views.ParentDetailsView,basename="parent")
 detailsRouter.register(r'address',views.AddressDetailsView,basename="address")
 detailsRouter.register(r'additional',views.AdditionalDetailsView,basename="additional")
+
+detailsRouter.register(r'subjectMatriculation',views.MatriculationView,basename="Matriculation")
 detailsRouter.register(r'tenschooling',views.TenSchoolingDetailsView,basename="tenschoolingdetail")
+
+
+detailsRouter.register(r'intermediate',views.IntermediateView,basename="intermediatedetail")
 detailsRouter.register(r'twlvethschooling',views.TwelfthSchoolingDetailsView,basename="twelfthschoolingdetail")
+
 detailsRouter.register(r'collegedetails',views.CollegeDetailsView,basename="collegedetail")
+detailsRouter.register(r'sem',views.SemesterSubjectView,basename="semestersubject")
+
+detailsRouter.register(r'navigate',views.NavigationView,basename="navigation")
 
 #academic Router
 academicRouter=DefaultRouter(trailing_slash=False)
